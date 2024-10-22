@@ -1,8 +1,5 @@
-import java.util.HashMap;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.FileInputStream;
-import java.util.PriorityQueue;
+import java.util.*;
+import java.io.*;
 
 public class Arquivo {
     private String nomeArquivo;
@@ -22,29 +19,39 @@ public class Arquivo {
    public void lerArquivoCaractere(HashMap<String, Integer> frequencia, PriorityQueue<arvBinaria> fila){
 
         try{
+
             BufferedReader arq = new BufferedReader(new InputStreamReader(new FileInputStream(this.nomeArquivo), "UTF-8"));
 
+
             int caractere = arq.read();
+            //System.out.println("Caractere: " + caractere);
             while(caractere != -1){
                 char c = (char) caractere;
                 String str = String.valueOf(c);
+                //System.out.println("String: " + str);
                 if(frequencia.get(str) == null){
                     frequencia.put(str, 1);
+                    //System.out.println("Frequencia: " + frequencia.get(str));
                 }
                 else{
-                    frequencia.put(str, frequencia.get(str) + 1);
+                    frequencia.replace(str, frequencia.get(str) + 1);
+                   // System.out.println("Frequencia: " + frequencia.get(str));
                 }  
                 caractere = arq.read();
+                //System.out.println("Caractere: " + caractere);
             }
             arq.close();
+
         }
-        catch(Exception e){
-            System.out.println("Erro ao abrir arquivo");
+        catch(IOException e){
+            System.out.println("Erro: " + e.getMessage());
         }
+
         frequencia.forEach((k, v) -> {
             arvBinaria arv = new arvBinaria(k, v);
-            fila.add(arv);
+            fila.add(arv); 
         });
+
     }
     
     public void lerArquivoPalavra(){

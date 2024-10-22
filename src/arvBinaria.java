@@ -1,6 +1,8 @@
-import java.util.PriorityQueue;
+import java.util.*;
+import java.io.Serializable;
 
-public class arvBinaria {
+public class arvBinaria implements Comparable<arvBinaria>, Serializable {
+    
         private String info;
         private int freq;
         private arvBinaria esq;
@@ -79,12 +81,60 @@ public class arvBinaria {
 
     public arvBinaria criaFilaArvBinaria(PriorityQueue<arvBinaria> fila){
         while(fila.size() > 1){
-            arvBinaria arv1 = fila.poll();
-            arvBinaria arv2 = fila.poll();
+            arvBinaria arv1 = fila.element();
+            fila.remove();
+            arvBinaria arv2 = fila.element();
+            fila.remove();
             arvBinaria arv = new arvBinaria(arv1.getFreq() + arv2.getFreq(), arv1, arv2);
             fila.add(arv);
         }
         return fila.element();
+    }
+
+    @Override
+	public int compareTo(arvBinaria o) {
+		// TODO Auto-generated method stub
+		if(this.freq == o.freq) {
+			return 0;
+		}else if(this.freq < o.freq) {
+			return -1;
+		}
+		return 1;
+	}
+
+    public void CodigoBinarioHash(HashMap<String, String> dicionario, String codigo, int lado){
+
+        if(this.esq != null){
+            this.esq.CodigoBinarioHash(dicionario, codigo+"0", lado);
+        }
+        if(this.info != null){
+            if(lado == 1){
+                dicionario.put(this.info, codigo);
+            } else {
+                dicionario.put(codigo, this.info);
+            }
+        }
+        if(this.dir != null){
+            this.dir.CodigoBinarioHash(dicionario, codigo+"1", lado);
+        }
+    }
+
+    public void imprimirHashTabela(HashMap<String, String> dicionario){
+        dicionario.forEach((k, v) -> {
+            System.out.println("Chave: " + k + " Valor: " + v);
+        });
+    }
+
+    public void imprimirFila(PriorityQueue<arvBinaria> fila){
+        fila.forEach((arv) -> {
+            System.out.println("Info: " + arv.getInfo() + " Freq: " + arv.getFreq());
+        });
+    }
+
+    public void imprimirHashTabelaFrequencia(HashMap<String, Integer> frequencia){
+        frequencia.forEach((k, v) -> {
+            System.out.println("Chave: " + k + " Valor: " + v);
+        });
     }
 }
 

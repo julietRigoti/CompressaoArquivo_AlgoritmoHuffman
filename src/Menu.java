@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.io.IOException;
 
 public class Menu {
 
@@ -8,8 +9,6 @@ public class Menu {
 
         System.out.println("Nome do arquivo: ");
         Arquivo Arquivo = new Arquivo(scanner.nextLine());
-
-        System.out.println("Nome do arquivo: " + Arquivo.getNomeArquivo());
 
         System.out.println("\nCompactar por: 1 - Caractere ou 2 - Palavra");
         System.out.println("Informe o que deseja fazer:"); 
@@ -22,7 +21,11 @@ public class Menu {
                 System.exit(0);
                 break;
             case 1:
-                Algoritmos.compactarCaractere(Arquivo);
+                try {
+                    Algoritmos.compactarCaractere(Arquivo); 
+                } catch (IOException erro) { 
+                    System.out.println("Erro: " + erro.getMessage());
+                }
                 break;
             case 2:
                 Algoritmos.compactarPalavra(Arquivo);
@@ -41,14 +44,24 @@ public class Menu {
         System.out.println("Informe o que deseja fazer:");
         aux = scanner.nextInt();
        
+        System.out.println("Nome do arquivo: ");
+        Arquivo Arquivo = new Arquivo(scanner.nextLine());
+
+        System.out.println("Nome do arquivo: " + Arquivo.getNomeArquivo());
+        
         scanner.close();
+
         
         switch (aux) {
             case 0:
                 System.exit(0);
                 break;
             case 1:
-                Algoritmos.descompactarCaractere();
+                try{
+                    Algoritmos.descompactarCaractere(Arquivo);
+                } catch (IOException erro) { 
+                    System.out.println("Erro: " + erro.getMessage());
+                }
                 break;
             case 2:
                 Algoritmos.descompactarPalavra();
@@ -86,10 +99,11 @@ public class Menu {
                 default:
                     System.out.println("Tente novamente!");
             }
-
             printar();
             System.out.println("\nInforme o que deseja fazer:");
             aux = scanner.nextInt();
         }
+
+        scanner.close();
     }
 }
