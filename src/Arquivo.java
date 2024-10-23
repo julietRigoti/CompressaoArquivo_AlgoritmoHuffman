@@ -16,20 +16,18 @@ public class Arquivo {
         this.nomeArquivo = nomeArquivo;
     }
     
-   public void lerArquivoCaractere(HashMap<String, Integer> frequencia, PriorityQueue<arvBinaria> fila){
+   public void lerArquivoCaractere(HashMap<String, Integer> frequencia, Queue<arvBinaria> fila){
 
         try{
 
-            BufferedReader arq = new BufferedReader(new InputStreamReader(new FileInputStream(this.nomeArquivo), "UTF-8"));
+            BufferedReader arq = new BufferedReader(new InputStreamReader(new FileInputStream(this.nomeArquivo), "UTF-8")); 
 
 
             int caractere = arq.read();
-            //System.out.println("Caractere: " + caractere);
             while(caractere != -1){
                 char c = (char) caractere;
                 String str = String.valueOf(c);
-                //System.out.println("String: " + str);
-                if(frequencia.get(str) == null){
+                if(frequencia.get(str) == null){ 
                     frequencia.put(str, 1);
                     //System.out.println("Frequencia: " + frequencia.get(str));
                 }
@@ -51,6 +49,8 @@ public class Arquivo {
             arvBinaria arv = new arvBinaria(k, v);
             fila.add(arv); 
         });
+
+        Collections.sort((List<arvBinaria>) fila);
 
     }
     

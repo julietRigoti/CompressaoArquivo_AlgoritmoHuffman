@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.Serializable;
 
 public class arvBinaria implements Comparable<arvBinaria>, Serializable {
-    
+        private static final long serialVersionUID = 1L;    
         private String info;
         private int freq;
         private arvBinaria esq;
@@ -44,6 +44,22 @@ public class arvBinaria implements Comparable<arvBinaria>, Serializable {
             return this.freq;
         }
 
+        public void setEsq(arvBinaria esq) {
+            this.esq = esq;
+        }
+
+        public arvBinaria getEsq() {
+            return this.esq;
+        }
+
+        public void setDir(arvBinaria dir) {
+            this.dir = dir;
+        }
+
+        public arvBinaria getDir() {
+            return this.dir;
+        }
+
         public void add(String info, int freq){
             if(this.info == "" && this.freq == 0){
                 this.info = info;
@@ -79,7 +95,7 @@ public class arvBinaria implements Comparable<arvBinaria>, Serializable {
 		}
 	}
 
-    public arvBinaria criaFilaArvBinaria(PriorityQueue<arvBinaria> fila){
+    public arvBinaria criaFilaArvBinaria(Queue<arvBinaria> fila){
         while(fila.size() > 1){
             arvBinaria arv1 = fila.element();
             fila.remove();
@@ -87,6 +103,7 @@ public class arvBinaria implements Comparable<arvBinaria>, Serializable {
             fila.remove();
             arvBinaria arv = new arvBinaria(arv1.getFreq() + arv2.getFreq(), arv1, arv2);
             fila.add(arv);
+            Collections.sort((List<arvBinaria>) fila);
         }
         return fila.element();
     }
@@ -125,7 +142,7 @@ public class arvBinaria implements Comparable<arvBinaria>, Serializable {
         });
     }
 
-    public void imprimirFila(PriorityQueue<arvBinaria> fila){
+    public void imprimirFila(Queue<arvBinaria> fila){
         fila.forEach((arv) -> {
             System.out.println("Info: " + arv.getInfo() + " Freq: " + arv.getFreq());
         });

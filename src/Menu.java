@@ -14,8 +14,6 @@ public class Menu {
         System.out.println("Informe o que deseja fazer:"); 
         int aux = scanner.nextInt();
 
-        scanner.close();
-
         switch (aux) {  
             case 0:
                 System.exit(0);
@@ -23,12 +21,14 @@ public class Menu {
             case 1:
                 try {
                     Algoritmos.compactarCaractere(Arquivo); 
+                    System.out.println("Compactado com sucesso!");
                 } catch (IOException erro) { 
                     System.out.println("Erro: " + erro.getMessage());
                 }
                 break;
             case 2:
                 Algoritmos.compactarPalavra(Arquivo);
+                
                 break;
             default:
                 System.out.println("Tente novamente!");
@@ -40,17 +40,14 @@ public class Menu {
         Scanner scanner = new Scanner(System.in);
         int aux;
 
-        System.out.println("\nDescompactar por: 1 - Caractere ou 2 - Palavra");
-        System.out.println("Informe o que deseja fazer:");
-        aux = scanner.nextInt();
-       
         System.out.println("Nome do arquivo: ");
         Arquivo Arquivo = new Arquivo(scanner.nextLine());
 
-        System.out.println("Nome do arquivo: " + Arquivo.getNomeArquivo());
-        
-        scanner.close();
+        System.out.println("\nDescompactar por: 1 - Caractere ou 2 - Palavra");
+        System.out.println("Informe o que deseja fazer:");
+        aux = scanner.nextInt();
 
+        System.out.println("Nome do arquivo: " + Arquivo.getNomeArquivo());
         
         switch (aux) {
             case 0:
@@ -58,7 +55,11 @@ public class Menu {
                 break;
             case 1:
                 try{
-                    Algoritmos.descompactarCaractere(Arquivo);
+                    try {
+                        Algoritmos.descompactarCaractere(Arquivo);
+                    } catch (ClassNotFoundException erro) {
+                        System.out.println("Erro: " + erro.getMessage());
+                    }
                 } catch (IOException erro) { 
                     System.out.println("Erro: " + erro.getMessage());
                 }
@@ -84,6 +85,7 @@ public class Menu {
         printar();
         System.out.println("Informe o que deseja fazer:");
         aux = scanner.nextInt();
+        scanner.nextLine();
 
         while (aux >= 0 && aux <= 2) {
             switch (aux) {
@@ -102,6 +104,7 @@ public class Menu {
             printar();
             System.out.println("\nInforme o que deseja fazer:");
             aux = scanner.nextInt();
+            scanner.nextLine();
         }
 
         scanner.close();
